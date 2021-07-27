@@ -1,4 +1,4 @@
-package com.example.wellbees_project;
+package com.example.wellbees_project.allSources;
 
 
 import com.google.gson.annotations.Expose;

@@ -1,4 +1,4 @@
-package com.example.wellbees_project;
+package com.example.wellbees_project.allSources;
 
 import java.util.List;
 
