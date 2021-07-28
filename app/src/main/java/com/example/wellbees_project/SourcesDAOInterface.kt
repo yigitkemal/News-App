@@ -9,8 +9,7 @@ import retrofit2.http.Query
 interface SourcesDAOInterface {
     //@GET("/v2/sources?country=us&apiKey=d8920f7f20be4311a9d4e2d76dc68139")
     @GET("/v2/sources")
-    fun allSources(@Query("country") sourcesCountry: String?,
-                   @Query("apiKey") api_key: String?): Call<SourcesReply?>
+    fun allSources(@Query("apiKey") api_key: String?): Call<SourcesReply?>
 
     // /v2/top-headlines?sources=bbc-news&apiKey=d8920f7f20be4311a9d4e2d76dc68139
     @GET("/v2/top-headlines")

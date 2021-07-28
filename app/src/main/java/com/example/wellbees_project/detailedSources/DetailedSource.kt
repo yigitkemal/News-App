@@ -14,5 +14,5 @@ class DetailedSource {
 
     @SerializedName("articles")
     @Expose
-    var articles: List<Article>? = null
+    var articles: ArrayList<Article>? = null
 }

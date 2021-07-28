@@ -3,6 +3,8 @@ package com.example.wellbees_project
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun allSources(recyclerView: RecyclerView) {
-        val call = sourcesDAOInterface!!.allSources(COUNTRY, API_KEY).enqueue(object : Callback<SourcesReply?> {
+        val call = sourcesDAOInterface!!.allSources(API_KEY).enqueue(object : Callback<SourcesReply?> {
             override fun onResponse(call: Call<SourcesReply?>, response: Response<SourcesReply?>) {
 
                var sourceList = response.body()!!.sources
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity() {
         } )
 
     }
+
+
 
     companion object {
         private val TAG = MainActivity::class.java.simpleName
