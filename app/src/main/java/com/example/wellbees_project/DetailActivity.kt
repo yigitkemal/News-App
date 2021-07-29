@@ -1,7 +1,8 @@
 package com.example.wellbees_project
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.detailedSources.Article
 import com.example.wellbees_project.detailedSources.DetailedSource
 import com.example.wellbees_project.detailedSources.SourceDetailAdapter
+import com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,15 +28,19 @@ class DetailActivity : AppCompatActivity() {
     var articleList = ArrayList<Article>()
     lateinit var recyclerView: RecyclerView
 
+
    // val recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
+        val fab = findViewById<FloatingActionButtonExpandable>(R.id.fab)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val sourcesId = intent.getStringExtra("sourcesId")
         sourcesDAOInterface = ApiUtils.sourcesDaoInterface
+
+        setupFab(fab,applicationContext)
         getSourceDetail(sourcesId, recyclerView)
     }
 
@@ -51,6 +57,29 @@ class DetailActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<DetailedSource?>, t: Throwable) {}
         })
+    }
+
+
+    private fun setupFab(fab: FloatingActionButtonExpandable, applicationContext: Context) {
+        var fabController: Boolean = true
+
+        fab.setOnClickListener {
+            if (fabController == true){
+                // eğer expand ise açıktır ve açık haline tıklanınca yeni bir sayfaya yönlenmesini sağlıyorum.
+                fabController = false
+                fab.expand()
+
+                val intent = Intent(applicationContext, BookmarksActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                applicationContext.startActivity(intent)
+
+
+            }else{
+                fabController = true
+                fab.collapse()
+            }
+
+        }
     }
 
 
