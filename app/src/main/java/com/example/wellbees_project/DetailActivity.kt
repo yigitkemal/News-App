@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -18,6 +19,7 @@ import com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -34,14 +36,18 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+
         recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
         val fab = findViewById<FloatingActionButtonExpandable>(R.id.fab)
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         val sourcesId = intent.getStringExtra("sourcesId")
         sourcesDAOInterface = ApiUtils.sourcesDaoInterface
 
+
         setupFab(fab,applicationContext)
         getSourceDetail(sourcesId, recyclerView)
+
     }
 
     fun getSourceDetail(sourcesId: String?, recyclerView: RecyclerView) {
@@ -81,7 +87,6 @@ class DetailActivity : AppCompatActivity() {
 
         }
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

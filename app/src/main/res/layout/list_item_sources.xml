@@ -44,7 +44,7 @@
 
 
         <TextView
-            android:id="@+id/subtitle"
+            android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="3"
@@ -68,9 +68,10 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:id="@+id/checkbox_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/checkbox_selector"/>
+            android:button="@drawable/checkbox_selector" />
 
 
     </LinearLayout>
