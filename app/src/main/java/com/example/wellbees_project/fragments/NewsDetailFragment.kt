@@ -33,9 +33,11 @@ class NewsDetailFragment : Fragment() {
         var recyclerView = rootView.findViewById<RecyclerView>(R.id.recycylerview_news_detail_fragment)
 
 
+        // kaydedilmiş haberler için recyclerview
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = bookmarkAdapter
 
+        //burada kaydedilmiş haber değerlerimi sqlden çekiyorum
         getNewsDetailSqlData()
 
 

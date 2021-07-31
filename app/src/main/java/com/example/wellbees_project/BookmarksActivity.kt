@@ -1,5 +1,6 @@
 package com.example.wellbees_project
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -34,6 +35,12 @@ class BookmarksActivity : AppCompatActivity() {
 
         tabs.getTabAt(0)!!.setIcon(R.drawable.ic_baseline_source_24)
         tabs.getTabAt(1)!!.setIcon(R.drawable.ic_baseline_short_text_24)
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        applicationContext.startActivity(intent)
     }
 
 }

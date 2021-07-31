@@ -38,9 +38,6 @@ class SourceDetailAdapter(private val sources: List<Article?>?, private val rowL
             checkBoxDetail = itemView.findViewById(R.id.checkbox_detail)
         }
 
-
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SourceDetailViewHolder {

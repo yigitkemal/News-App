@@ -55,7 +55,6 @@ class DetailActivity : AppCompatActivity() {
             override fun onResponse(call: Call<DetailedSource?>, response: Response<DetailedSource?>) {
                 articleList = response.body()!!.articles!!
 
-
                 displayList.addAll(articleList)
 
                 recyclerView.adapter = SourceDetailAdapter(displayList, R.layout.list_item_sources, applicationContext)
