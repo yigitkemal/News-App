@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.R
 import com.example.wellbees_project.models.NewsDetailModel
+import com.squareup.picasso.Picasso
 
 class BookmarkNewsDetailAdapter(val newsDetailList: ArrayList<NewsDetailModel>, private val rowLayout: Int, private val context: Context?): RecyclerView.Adapter<BookmarkNewsDetailAdapter.BookmarkNewsDetailHolder>() {
 
@@ -40,8 +41,10 @@ class BookmarkNewsDetailAdapter(val newsDetailList: ArrayList<NewsDetailModel>, 
     }
 
     override fun onBindViewHolder(holder: BookmarkNewsDetailHolder, position: Int) {
-        holder.sourceTitle.text = newsDetailList.get(position).name
-
+        holder.sourceTitle.text = newsDetailList.get(position).title
+        holder.sourceDescription.text = newsDetailList.get(position).description
+        holder.sourceContent.text = newsDetailList.get(position).content
+        Picasso.get().load(newsDetailList.get(position)!!.urlToImage).into(holder.sourceDetailImage)
 
         holder.itemView.setOnClickListener{
 

@@ -36,17 +36,33 @@ class NewsDetailFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = bookmarkAdapter
 
+        getNewsDetailSqlData()
+
+
+        return rootView
+    }
+
+    private fun getNewsDetailSqlData() {
         try {
-            val database = activity?.openOrCreateDatabase("NewsDetails", MODE_PRIVATE,null)
+            val database = activity?.openOrCreateDatabase("NewsDetails", MODE_PRIVATE, null)
 
-            var cursor = database!!.rawQuery("SELECT * FROM newsdetails",null)
-            val newsTitleIx = cursor.getColumnIndex("title")
+            var cursor = database!!.rawQuery("SELECT * FROM newsdetails", null)
             val idIx = cursor.getColumnIndex("id")
+            val newsTitleIx = cursor.getColumnIndex("title")
+            val newsDescription = cursor.getColumnIndex("description")
+            val newsContent = cursor.getColumnIndex("content")
+            val newsUrl = cursor.getColumnIndex("newsUrl")
+            val newsPhotoUrl = cursor.getColumnIndex("photoUrl")
 
-            while (cursor.moveToNext()){
-                val title = cursor.getString(newsTitleIx)
+            while (cursor.moveToNext()) {
                 val id = cursor.getInt(idIx)
-                val newsDetail = NewsDetailModel(title, id)
+                val title = cursor.getString(newsTitleIx)
+                val description = cursor.getString(newsDescription)
+                val content = cursor.getString(newsContent)
+                val url = cursor.getString(newsUrl)
+                val urlToImage = cursor.getString(newsPhotoUrl)
+
+                val newsDetail = NewsDetailModel(id, title, description, content, urlToImage, url)
                 Log.e("****-********", title)
                 newsDetailList.add(newsDetail)
             }
@@ -54,11 +70,8 @@ class NewsDetailFragment : Fragment() {
             cursor.close()
             bookmarkAdapter.notifyDataSetChanged()
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
-        return rootView
     }
 }

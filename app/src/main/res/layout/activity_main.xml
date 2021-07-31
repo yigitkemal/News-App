@@ -16,4 +16,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        app:fab_content="My Bookmarks"
+        app:fab_text_color="#FFF375"
+        app:fab_icon="@drawable/ic_baseline_bookmark_24"
+        app:fab_duration="200"
+        app:fab_expanded="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:fab_bg_color="@color/purple_700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.895"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

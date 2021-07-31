@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.R
 import com.example.wellbees_project.detailedSources.SourceDetailAdapter.SourceDetailViewHolder
+import com.example.wellbees_project.models.NewsDetailModel
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
@@ -53,15 +54,44 @@ class SourceDetailAdapter(private val sources: List<Article?>?, private val rowL
         holder.sourceContent.text = sources[position]!!.content
         Picasso.get().load(sources[position]!!.urlToImage).into(holder.sourceDetailImage)
 
+
         holder.itemView.setOnClickListener{
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(sources[position]!!.url))
             browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(browserIntent)
         }
+
+        val database = context?.openOrCreateDatabase("NewsDetails", Context.MODE_PRIVATE, null)
+        try {
+            val difficultString = sources[position]!!.title!!.replace("'","''")
+
+            var cursor = database!!.rawQuery("SELECT * FROM newsdetails WHERE title='${difficultString}' ", null)
+
+            val newsTitle = cursor.getColumnIndex("title")
+
+            while (cursor.moveToNext()){
+                val title = cursor.getString(newsTitle)
+
+                Log.e("***", title)
+                Log.e("***", sources[position]!!.title!!)
+
+                if(title == (sources[position]!!.title!!)){
+                    holder.checkBoxDetail.isChecked = cursor.count > 0
+                }
+            }
+
+
+
+            cursor.close()
+
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
         holder.checkBoxDetail.setOnCheckedChangeListener{buttonView, isChecked ->
+            val database = context.openOrCreateDatabase("NewsDetails", AppCompatActivity.MODE_PRIVATE,null)
             if(isChecked){
                 try {
-                    val database = context.openOrCreateDatabase("NewsDetails", AppCompatActivity.MODE_PRIVATE,null)
                     database.execSQL("CREATE TABLE IF NOT EXISTS newsdetails(id INTEGER PRIMARY KEY, title VARCHAR, description VARCHAR, content VARCHAR, newsUrl VARCHAR, photoUrl VARCHAR)")
 
                     val sqlString = "INSERT INTO newsdetails (title, description, content, newsUrl, photoUrl) VALUES (?, ?, ?, ?, ?)"
@@ -76,9 +106,13 @@ class SourceDetailAdapter(private val sources: List<Article?>?, private val rowL
                 }catch (e: Exception){
                     Log.e("ERROR", e.toString())
                 }
-
-
             }else{
+               try {
+                   val difficultString = sources[position]!!.title!!.replace("'","''")
+                   database.execSQL("DELETE FROM newsdetails WHERE title ='${difficultString}'")
+               }catch (e:Exception){
+                   Log.e("ERROR", e.toString())
+               }
 
             }
 

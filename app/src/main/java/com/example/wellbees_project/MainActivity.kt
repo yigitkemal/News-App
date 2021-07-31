@@ -1,5 +1,7 @@
 package com.example.wellbees_project
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY
 import android.util.Log
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.allSources.AllSourcesAdapter
 import com.example.wellbees_project.allSources.Source
 import com.example.wellbees_project.allSources.SourcesReply
+import com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,10 +26,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val recyclerView = findViewById<View>(R.id.source_recyclerview) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val fab = findViewById<FloatingActionButtonExpandable>(R.id.fab)
+
         sourcesDAOInterface = ApiUtils.sourcesDaoInterface
 
 
-
+        setupFab(fab,applicationContext)
         allSources(recyclerView)
     }
 
@@ -54,6 +59,27 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private fun setupFab(fab: FloatingActionButtonExpandable, applicationContext: Context) {
+        var fabController: Boolean = true
+
+        fab.setOnClickListener {
+            if (fabController == true){
+                // eğer expand ise açıktır ve açık haline tıklanınca yeni bir sayfaya yönlenmesini sağlıyorum.
+                fabController = false
+                fab.expand()
+
+                val intent = Intent(applicationContext, BookmarksActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                applicationContext.startActivity(intent)
+
+
+            }else{
+                fabController = true
+                fab.collapse()
+            }
+
+        }
+    }
 
     companion object {
         private val TAG = MainActivity::class.java.simpleName
