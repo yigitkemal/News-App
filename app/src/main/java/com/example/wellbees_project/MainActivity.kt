@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun allSources(recyclerView: RecyclerView) {
+
+        //burada retrofit ile tüm haber kaynaklarımı çekiyorum. Daha sonra bunları liste olarak recyclerviewime göndererek uygulama içerisinde gözükmesini sağlıyorum.
         val call = sourcesDAOInterface!!.allSources(API_KEY).enqueue(object : Callback<SourcesReply?> {
             override fun onResponse(call: Call<SourcesReply?>, response: Response<SourcesReply?>) {
 
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    //Burada açılır kapanır floatingactionbuttonumın açılıp kapanma ayarlarını ve beni yönlendireceği sayfayı ayarlıyorum.
     private fun setupFab(fab: FloatingActionButtonExpandable, applicationContext: Context) {
         var fabController: Boolean = true
 
@@ -68,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                 fabController = false
                 fab.expand()
 
+                //Buradaki intent sayesinde bookmarks activityye geçiş sağlıyorum.
                 val intent = Intent(applicationContext, BookmarksActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 applicationContext.startActivity(intent)
@@ -81,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //retrofit ile veri çekerken kullandığım api key gibi sabit verileri burada tutuyorum.
     companion object {
         private val TAG = MainActivity::class.java.simpleName
         const val API_KEY = "d8920f7f20be4311a9d4e2d76dc68139"

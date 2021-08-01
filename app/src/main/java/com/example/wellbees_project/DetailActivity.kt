@@ -31,25 +31,31 @@ class DetailActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
 
-   // val recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
+    // val recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        //recyclerviewin xml dosyası ile bağlantısının sağlandığı yer
         recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
+
+        //floatingactionbuttonımın xml dosyası ile bağlnantısının sağlandığı yer
         val fab = findViewById<FloatingActionButtonExpandable>(R.id.fab)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        //bu alan sayesinde bir önceki activityde çekilen verilerden sourcesIdyi DetailActivityye taşıyorum. Bunun sayesinde seçilen haber kaynağının getirilmesini sağlayacağım.
         val sourcesId = intent.getStringExtra("sourcesId")
         sourcesDAOInterface = ApiUtils.sourcesDaoInterface
 
 
-        setupFab(fab,applicationContext)
+        setupFab(fab, applicationContext)
         getSourceDetail(sourcesId, recyclerView)
 
     }
 
+    // buradaki fonksiyonda retrofit ile bir önceki activitymden aldığım sourcesId ile ilgili haber kaynağındaki haberleri çekiyorum
     fun getSourceDetail(sourcesId: String?, recyclerView: RecyclerView) {
         sourcesDAOInterface!!.getSourceDetail(sourcesId, API_KEY).enqueue(object : Callback<DetailedSource?> {
             override fun onResponse(call: Call<DetailedSource?>, response: Response<DetailedSource?>) {
@@ -65,11 +71,12 @@ class DetailActivity : AppCompatActivity() {
     }
 
 
+    //main activitydeki floatingactionbutton fonksiyonunun birebir aynısı.
     private fun setupFab(fab: FloatingActionButtonExpandable, applicationContext: Context) {
         var fabController: Boolean = true
 
         fab.setOnClickListener {
-            if (fabController == true){
+            if (fabController == true) {
                 // eğer expand ise açıktır ve açık haline tıklanınca yeni bir sayfaya yönlenmesini sağlıyorum.
                 fabController = false
                 fab.expand()
@@ -79,7 +86,7 @@ class DetailActivity : AppCompatActivity() {
                 applicationContext.startActivity(intent)
 
 
-            }else{
+            } else {
                 fabController = true
                 fab.collapse()
             }
@@ -93,30 +100,30 @@ class DetailActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         val menuItem = menu!!.findItem(R.id.search)
 
-        if(menuItem != null){
+        if (menuItem != null) {
             val searchView = menuItem.actionView as SearchView
             val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
             editText.hint = "Search..."
 
-            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                   return true
+                    return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
 
-                    if(newText!!.isNotEmpty()){
+                    if (newText!!.isNotEmpty()) {
                         displayList.clear()
                         val search = newText!!.toLowerCase(Locale.getDefault())
 
-                        articleList.forEach{
-                            if(it.title!!.toLowerCase(Locale.getDefault()).contains(search)){
+                        articleList.forEach {
+                            if (it.title!!.toLowerCase(Locale.getDefault()).contains(search)) {
                                 displayList.add(it);
                             }
                         }
                         recyclerView.adapter!!.notifyDataSetChanged()
 
-                    }else{
+                    } else {
                         displayList.clear()
                         displayList.addAll(articleList)
                         recyclerView.adapter!!.notifyDataSetChanged()
@@ -125,14 +132,13 @@ class DetailActivity : AppCompatActivity() {
                     return true
                 }
 
-            } )
+            })
         }
 
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
 
 
         return super.onOptionsItemSelected(item)

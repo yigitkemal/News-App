@@ -25,6 +25,7 @@ class BookmarksActivity : AppCompatActivity() {
         setUpTabs()
     }
 
+    //buradaki alanda bookmark activitymin appbarında bulunan tabların ayarlarını yapıyorum
     private fun setUpTabs(){
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(SourceFragment(), "Sources")
