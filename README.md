@@ -4,7 +4,7 @@
 
 ## Table of Contents
 * [General info](#general-info)
-* [How to Use](#how_to_use)
+* [How to Use](#how-to-use)
 * [Technologies](#technologies)
 * [Additional Info](#additional_info)
 * [Authors](#Authors)
