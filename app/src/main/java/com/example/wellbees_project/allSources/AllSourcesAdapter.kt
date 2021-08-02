@@ -21,6 +21,7 @@ import java.util.*
 
 class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayout: Int, private val context: Context) : RecyclerView.Adapter<AllSourcesViewHolder>() {
 
+    //haber kaynaklarımda kullanacağım elementlerin tanımlanmasını yapıyorum
     class AllSourcesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var sourceLayout: LinearLayout
         var sourceTitle: TextView
@@ -29,6 +30,7 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
         val checkBox: CheckBox
 
         init {
+            //haber kaynaklarının bulunduğu ekrandaki elementleri xml dosyam ile ilişkilendiriyorum
             sourceLayout = itemView.findViewById(R.id.source_layout)
             sourceTitle = itemView.findViewById(R.id.title)
             sourceData = itemView.findViewById(R.id.countryFlag)
@@ -43,11 +45,13 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
     }
 
     override fun onBindViewHolder(holder: AllSourcesViewHolder, position: Int) {
-
+        //ilişkilendirmiş olduğum elementlerin üzerine verilerin atanmasını sağladım
         holder.sourceTitle.text = sources!![position]!!.name
         holder.sourceDescription.text = sources[position]!!.description
+        //burada farklı bir yöntem izleyerek dillerin yazı olarak değil bayrak olarak gözükmesini sağladım
         holder.sourceData.text = sources!![position]!!.language!!.toFlagEmoji()
 
+        // liste elemanıma tıklanma özelliğini ekledim
         holder.itemView.setOnClickListener {
             println("--------------------------" + sources[position]!!.ıd + "--------------------------")
             val intent = Intent(context, DetailActivity::class.java)
@@ -56,12 +60,16 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
             context.startActivity(intent)
         }
 
+        //veri tabanı yoksa oluşturulsun varsa açılsın diye aşağıdaki sorguyu çalıştırıyorum
         val database = context?.openOrCreateDatabase("NewsSource", Context.MODE_PRIVATE, null)
         try {
+            //çekmiş olduğum veri içinde bulunan tırnak işareti gibi veriler sorgumu engelliyor
+            // bu yüzden tırnak işaretlerinin de okunmasını sağlayabilmek için onları değiştirip başka bir string içinde tutuyorum.
             val difficultString = sources[position]!!.name!!.replace("'","''")
 
             var cursor = database!!.rawQuery("SELECT * FROM newssource WHERE title='${difficultString}' ", null)
 
+            //çekmiş olduğum verinin title'ını kenara ayırıyorum
             val newsTitle = cursor.getColumnIndex("title")
 
             while (cursor.moveToNext()){
@@ -70,6 +78,7 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
                 Log.e("***", title)
                 Log.e("***", sources[position]!!.name!!)
 
+                //eğer title veritabanımdaki herhangi bir veri ile eşitse bookmarkın işaretli olmasını sağlıyorum
                 if(title == (sources[position]!!.name!!)){
                     holder.checkBox.isChecked = cursor.count > 0
                 }
@@ -84,8 +93,11 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
         }
 
 
+        //burada bookmark olarak adlandırmış olduğum checkboxlarımın açılıp kapanmasını dinliyorum.
         holder.checkBox.setOnCheckedChangeListener{buttonView, isChecked ->
             val database = context.openOrCreateDatabase("NewsSource", AppCompatActivity.MODE_PRIVATE,null)
+
+            // eğer bookmark işaretli değilken tıklamış isem bu alana girip o verinin veritabanıma kaydolmasını sağlıyorum
             if(isChecked){
                 try {
                     database.execSQL("CREATE TABLE IF NOT EXISTS newssource(id INTEGER PRIMARY KEY, title VARCHAR, description VARCHAR, language VARCHAR , urlId VARCHAR)")
@@ -104,6 +116,7 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
                 }
             }else{
                 try {
+                    //eğer bookmark işaretliyken tıklamış isem o verinin veritabanından silinmesini sağlıyorum
                     val difficultString = sources[position]!!.name!!.replace("'","''")
                     database.execSQL("DELETE FROM newssource WHERE title ='${difficultString}'")
                 }catch (e: Exception){
@@ -118,14 +131,17 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
 
 
 
+    //bu fonksiyon sayesinde dil kodlarımı ülke bayrağı emojisine çeviriyorum
     fun String.toFlagEmoji(): String {
 
         if (this.length != 2) {
             return this
         }
 
-        var countryCodeCaps = this.toUpperCase() // upper case is important because we are calculating offset
+        var countryCodeCaps = this.toUpperCase()
 
+        //dil kodları ülke kodları ile uyuşmuyordu ve bayraklar için ülke koduna ihtiyacım vardı,
+        // dil kodlarını ilgili ülke koduna aşağıdaki if else ile çevirdim.
         if(countryCodeCaps.equals("EN")){
             countryCodeCaps = "GB"
         }else if(countryCodeCaps.equals("AR")){
@@ -143,11 +159,9 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
         val firstLetter = Character.codePointAt(countryCodeCaps, 0) - 0x41 + 0x1F1E6
         val secondLetter = Character.codePointAt(countryCodeCaps, 1) - 0x41 + 0x1F1E6
 
-        // 2. It then checks if both characters are alphabet
         if (!countryCodeCaps[0].isLetter() || !countryCodeCaps[1].isLetter()) {
             return this
         }
-
 
         println(String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter)) + "--------------------------------------")
         return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))

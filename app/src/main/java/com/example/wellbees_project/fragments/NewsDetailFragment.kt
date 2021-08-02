@@ -44,10 +44,13 @@ class NewsDetailFragment : Fragment() {
         return rootView
     }
 
+    //sql üzerinden kayıtlı haber kaynaklarının çekilme işlemini gerçekleştiriyorum
     private fun getNewsDetailSqlData() {
         try {
+            //verileri NewsDetails tablsoundan çekeceğimi belirtiyorum
             val database = activity?.openOrCreateDatabase("NewsDetails", MODE_PRIVATE, null)
 
+            //sorgumu bir cursor içinde tutup kontrolünü ve performansını artırıyorum
             var cursor = database!!.rawQuery("SELECT * FROM newsdetails", null)
             val idIx = cursor.getColumnIndex("id")
             val newsTitleIx = cursor.getColumnIndex("title")
@@ -56,6 +59,7 @@ class NewsDetailFragment : Fragment() {
             val newsUrl = cursor.getColumnIndex("newsUrl")
             val newsPhotoUrl = cursor.getColumnIndex("photoUrl")
 
+            //cursor içinde bulunan verilerin hepsinin çekilmesi için onları bir while döngüsü ile çekiyorum ve oluşturmuş olduğum modelde tutuyorum.
             while (cursor.moveToNext()) {
                 val id = cursor.getInt(idIx)
                 val title = cursor.getString(newsTitleIx)
@@ -69,7 +73,10 @@ class NewsDetailFragment : Fragment() {
                 newsDetailList.add(newsDetail)
             }
 
+            //yük olmaması için cursorum ile işim bitince kapatıyorum
             cursor.close()
+
+            //herhangi bir veri değişikliği olup olmadığını dinliyorum
             bookmarkAdapter.notifyDataSetChanged()
 
         } catch (e: Exception) {

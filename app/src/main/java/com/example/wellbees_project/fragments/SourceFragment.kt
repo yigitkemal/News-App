@@ -30,8 +30,8 @@ class SourceFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         var rootView = inflater.inflate(R.layout.fragment_source, container, false)
+        //burada fragmentimin içerisinde bulunan recyclerviewe atama yapıyorum
         var recyclerView = rootView.findViewById<RecyclerView>(R.id.recycylerview_news_source_fragment)
 
         // kaydedilmiş haberler için recyclerview
@@ -46,10 +46,13 @@ class SourceFragment : Fragment() {
     }
 
 
+    //sql üzerinden kayıtlı haber kaynaklarının çekilme işlemini gerçekleştiriyorum
     private fun getNewsDetailSqlData() {
         try {
+            //verileri NewsSource tablsoundan çekeceğimi belirtiyorum
             val database = activity?.openOrCreateDatabase("NewsSource", Context.MODE_PRIVATE, null)
 
+            //sorgumu bir cursor içinde tutup kontrolünü ve performansını artırıyorum
             var cursor = database!!.rawQuery("SELECT * FROM newssource", null)
             val idIx = cursor.getColumnIndex("id")
             val newsTitleIx = cursor.getColumnIndex("title")
@@ -57,6 +60,7 @@ class SourceFragment : Fragment() {
             val newsContent = cursor.getColumnIndex("language")
             val newsUrlId = cursor.getColumnIndex("urlId")
 
+            //cursor içinde bulunan verilerin hepsinin çekilmesi için onları bir while döngüsü ile çekiyorum ve oluşturmuş olduğum modelde tutuyorum.
             while (cursor.moveToNext()) {
                 val id = cursor.getInt(idIx)
                 val title = cursor.getString(newsTitleIx)
@@ -65,11 +69,13 @@ class SourceFragment : Fragment() {
                 val urlId = cursor.getString(newsUrlId)
 
                 val newsSource = NewsSourceModel(id, title, description, content, urlId)
-                Log.e("****-********", title)
                 sourceDetailList.add(newsSource)
             }
 
+            //yük olmaması için cursorum ile işim bitince kapatıyorum
             cursor.close()
+
+            //herhangi bir veri değişikliği olup olmadığını dinliyorum
             bookmarkAdapter.notifyDataSetChanged()
 
         } catch (e: Exception) {

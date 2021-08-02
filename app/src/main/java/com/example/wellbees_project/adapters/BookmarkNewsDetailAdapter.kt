@@ -21,7 +21,6 @@ import java.lang.Exception
 class BookmarkNewsDetailAdapter(val newsDetailList: ArrayList<NewsDetailModel>, private val rowLayout: Int, private val context: Context?): RecyclerView.Adapter<BookmarkNewsDetailAdapter.BookmarkNewsDetailHolder>() {
 
     class BookmarkNewsDetailHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-
         var sourceLayout: LinearLayout
         var sourceTitle: TextView
         var sourceDescription: TextView

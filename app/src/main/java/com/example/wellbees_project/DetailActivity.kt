@@ -95,6 +95,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
 
+    //burada detail activity im içerisinde arama sağlıyorum
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         menuInflater.inflate(R.menu.menu, menu)
@@ -113,17 +114,25 @@ class DetailActivity : AppCompatActivity() {
                 override fun onQueryTextChange(newText: String?): Boolean {
 
                     if (newText!!.isNotEmpty()) {
+                        //listemin aslında her seferde temizlenmesini sağlıyorum, displaylist gözüken listem
                         displayList.clear()
+
+                        //aranan veriyi search nesnesine atıyorum
                         val search = newText!!.toLowerCase(Locale.getDefault())
 
+                        //search nesnesi ile genel çektiğim liste üzerinde arama yapıyorum ve
+                        // eğer eşit ise articlelistimdeki eşleşen veriyi boşalttığım displayliste ekliyorum
                         articleList.forEach {
                             if (it.title!!.toLowerCase(Locale.getDefault()).contains(search)) {
                                 displayList.add(it);
                             }
                         }
+
+                        //verilerde değişiklik olmuş ise bunu recyclerviewime bildiriyorum
                         recyclerView.adapter!!.notifyDataSetChanged()
 
                     } else {
+                        //herhangi bir değişiklik yok ise displaylistimi temizleyip tüm articlelisti içine atıyorum.
                         displayList.clear()
                         displayList.addAll(articleList)
                         recyclerView.adapter!!.notifyDataSetChanged()
@@ -136,12 +145,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-
-        return super.onOptionsItemSelected(item)
     }
 
     companion object {
