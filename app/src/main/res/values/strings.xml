@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wellbees Project</string>
+    <string name="app_name">News App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Merhaba bu haber kaynakları</string>
     <string name="hello_blank_fragment_news">Bu da kaydedilen haberler</string>
