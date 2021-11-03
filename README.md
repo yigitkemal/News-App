@@ -1,5 +1,5 @@
 
-# Wellbees Project
+# News App
 ### Simple News App
 
 ## Table of Contents
