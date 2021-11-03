@@ -1,4 +1,4 @@
-package com.example.wellbees_project
+package com.example.wellbees_project.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

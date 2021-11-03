@@ -1,18 +1,17 @@
-package com.example.wellbees_project
+package com.example.wellbees_project.activity
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wellbees_project.retrofit.ApiUtils
+import com.example.wellbees_project.R
+import com.example.wellbees_project.retrofit.SourcesDAOInterface
 import com.example.wellbees_project.allSources.AllSourcesAdapter
-import com.example.wellbees_project.allSources.Source
 import com.example.wellbees_project.allSources.SourcesReply
 import com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
 import retrofit2.Call
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                     Log.e("source id: ", a.description!!)
                 }
 
-                recyclerView.adapter = AllSourcesAdapter(sourceList,R.layout.list_item,applicationContext)
+                recyclerView.adapter = AllSourcesAdapter(sourceList, R.layout.list_item,applicationContext)
             }
 
             override fun onFailure(call: Call<SourcesReply?>, t: Throwable) {

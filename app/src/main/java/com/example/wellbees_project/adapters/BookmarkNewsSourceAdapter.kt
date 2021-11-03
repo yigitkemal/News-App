@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wellbees_project.DetailActivity
+import com.example.wellbees_project.activity.DetailActivity
 import com.example.wellbees_project.R
 import com.example.wellbees_project.models.NewsSourceModel
 import java.lang.Exception

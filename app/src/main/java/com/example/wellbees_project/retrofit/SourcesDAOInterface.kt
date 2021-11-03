@@ -1,4 +1,4 @@
-package com.example.wellbees_project
+package com.example.wellbees_project.retrofit
 
 import com.example.wellbees_project.allSources.SourcesReply
 import com.example.wellbees_project.detailedSources.DetailedSource

@@ -1,17 +1,18 @@
-package com.example.wellbees_project
+package com.example.wellbees_project.activity
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wellbees_project.retrofit.ApiUtils
+import com.example.wellbees_project.R
+import com.example.wellbees_project.retrofit.SourcesDAOInterface
 import com.example.wellbees_project.detailedSources.Article
 import com.example.wellbees_project.detailedSources.DetailedSource
 import com.example.wellbees_project.detailedSources.SourceDetailAdapter
@@ -19,7 +20,6 @@ import com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 

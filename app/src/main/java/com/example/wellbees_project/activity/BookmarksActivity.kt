@@ -1,9 +1,10 @@
-package com.example.wellbees_project
+package com.example.wellbees_project.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.example.wellbees_project.R
 import com.example.wellbees_project.adapters.ViewPagerAdapter
 import com.example.wellbees_project.fragments.NewsDetailFragment
 import com.example.wellbees_project.fragments.SourceFragment

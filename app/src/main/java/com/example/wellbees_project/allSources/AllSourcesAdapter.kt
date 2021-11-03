@@ -7,17 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wellbees_project.DetailActivity
+import com.example.wellbees_project.activity.DetailActivity
 import com.example.wellbees_project.R
 import com.example.wellbees_project.allSources.AllSourcesAdapter.AllSourcesViewHolder
-import org.w3c.dom.Text
 import java.lang.Exception
-import java.util.*
 
 class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayout: Int, private val context: Context) : RecyclerView.Adapter<AllSourcesViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.example.wellbees_project
+package com.example.wellbees_project.retrofit
 
 object ApiUtils {
     const val BASE_URL = "https://newsapi.org"
