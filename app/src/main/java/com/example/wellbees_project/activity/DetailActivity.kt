@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.retrofit.ApiUtils
 import com.example.wellbees_project.R
+import com.example.wellbees_project.databinding.ActivityDetailBinding
 import com.example.wellbees_project.retrofit.SourcesDAOInterface
 import com.example.wellbees_project.detailedSources.Article
 import com.example.wellbees_project.detailedSources.DetailedSource
@@ -24,24 +25,28 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class DetailActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityDetailBinding
+
     private var sourcesDAOInterface: SourcesDAOInterface? = null
 
     val displayList = ArrayList<Article>()
     var articleList = ArrayList<Article>()
     lateinit var recyclerView: RecyclerView
 
-
     // val recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         //recyclerviewin xml dosyası ile bağlantısının sağlandığı yer
-        recyclerView = findViewById<View>(R.id.source_detail_recyclerview) as RecyclerView
+        recyclerView = binding.sourceDetailRecyclerview
 
         //floatingactionbuttonımın xml dosyası ile bağlnantısının sağlandığı yer
-        val fab = findViewById<FloatingActionButtonExpandable>(R.id.fab)
+        val fab = binding.fab
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 

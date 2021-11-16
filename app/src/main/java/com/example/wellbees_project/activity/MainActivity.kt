@@ -13,19 +13,27 @@ import com.example.wellbees_project.R
 import com.example.wellbees_project.retrofit.SourcesDAOInterface
 import com.example.wellbees_project.allSources.AllSourcesAdapter
 import com.example.wellbees_project.allSources.SourcesReply
+import com.example.wellbees_project.databinding.ActivityMainBinding
 import com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     private var sourcesDAOInterface: SourcesDAOInterface? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val recyclerView = findViewById<View>(R.id.source_recyclerview) as RecyclerView
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+
+        val recyclerView = binding.sourceRecyclerview
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val fab = findViewById<FloatingActionButtonExpandable>(R.id.fab)
+        val fab = binding.fab
 
         sourcesDAOInterface = ApiUtils.sourcesDaoInterface
 

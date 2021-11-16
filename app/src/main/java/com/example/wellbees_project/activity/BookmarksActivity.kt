@@ -6,21 +6,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.wellbees_project.R
 import com.example.wellbees_project.adapters.ViewPagerAdapter
+import com.example.wellbees_project.databinding.ActivityBookmarksBinding
 import com.example.wellbees_project.fragments.NewsDetailFragment
 import com.example.wellbees_project.fragments.SourceFragment
 import com.google.android.material.tabs.TabLayout
 
 class BookmarksActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityBookmarksBinding
+
     lateinit var tabs: TabLayout
     lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bookmarks)
+        binding = ActivityBookmarksBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        tabs = findViewById(R.id.tabs)
-        viewPager = findViewById(R.id.viewPager)
+        tabs = binding.tabs
+        viewPager = binding.viewPager
 
 
         setUpTabs()
