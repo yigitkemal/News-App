@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.R
 import com.example.wellbees_project.adapters.BookmarkNewsDetailAdapter
+import com.example.wellbees_project.databinding.FragmentNewsDetailBinding
 import com.example.wellbees_project.models.NewsDetailModel
 import java.lang.Exception
 
 class NewsDetailFragment : Fragment() {
+
+    private lateinit var binding: FragmentNewsDetailBinding
 
     private lateinit var newsDetailList: ArrayList<NewsDetailModel>
     private lateinit var bookmarkAdapter: BookmarkNewsDetailAdapter
@@ -29,8 +32,10 @@ class NewsDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        var rootView = inflater.inflate(R.layout.fragment_news_detail, container, false)
-        var recyclerView = rootView.findViewById<RecyclerView>(R.id.recycylerview_news_detail_fragment)
+        binding = FragmentNewsDetailBinding.inflate(inflater,container,false)
+        val view = binding.root
+
+        var recyclerView = binding.recycylerviewNewsDetailFragment
 
 
         // kaydedilmiş haberler için recyclerview
@@ -41,7 +46,7 @@ class NewsDetailFragment : Fragment() {
         getNewsDetailSqlData()
 
 
-        return rootView
+        return view
     }
 
     //sql üzerinden kayıtlı haber kaynaklarının çekilme işlemini gerçekleştiriyorum

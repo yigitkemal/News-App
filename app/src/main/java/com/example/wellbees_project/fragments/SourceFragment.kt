@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.R
 import com.example.wellbees_project.adapters.BookmarkNewsSourceAdapter
+import com.example.wellbees_project.databinding.FragmentSourceBinding
 import com.example.wellbees_project.models.NewsSourceModel
 import java.lang.Exception
 
 
 class SourceFragment : Fragment() {
+
+    private lateinit var binding: FragmentSourceBinding
 
     private lateinit var sourceDetailList: ArrayList<NewsSourceModel>
     private lateinit var bookmarkAdapter: BookmarkNewsSourceAdapter
@@ -30,9 +33,11 @@ class SourceFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        var rootView = inflater.inflate(R.layout.fragment_source, container, false)
+        binding = FragmentSourceBinding.inflate(inflater,container,false)
+        val rootView = binding.root
+
         //burada fragmentimin içerisinde bulunan recyclerviewe atama yapıyorum
-        var recyclerView = rootView.findViewById<RecyclerView>(R.id.recycylerview_news_source_fragment)
+        var recyclerView = binding.recycylerviewNewsSourceFragment
 
         // kaydedilmiş haberler için recyclerview
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -40,7 +45,6 @@ class SourceFragment : Fragment() {
 
         //burada kaydedilmiş haber değerlerimi sqlden çekiyorum
         getNewsDetailSqlData()
-
 
         return rootView
     }
