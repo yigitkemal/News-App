@@ -13,40 +13,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.activity.DetailActivity
 import com.example.wellbees_project.R
+import com.example.wellbees_project.databinding.ListItemBinding
 import com.example.wellbees_project.models.NewsSourceModel
 import java.lang.Exception
 
 class BookmarkNewsSourceAdapter (val newsSourceList: ArrayList<NewsSourceModel>, private val rowLayout: Int, private val context: Context?): RecyclerView.Adapter<BookmarkNewsSourceAdapter.BookmarkNewsSourceHolder>() {
 
 
-    class BookmarkNewsSourceHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
-
-        var sourceLayout: LinearLayout
-        var title: TextView
-        var language: TextView
-        var description: TextView
-        var checkBox: CheckBox
-
-        init {
-            sourceLayout = itemView.findViewById(R.id.source_layout)
-            title = itemView.findViewById(R.id.title)
-            language = itemView.findViewById(R.id.countryFlag)
-            description = itemView.findViewById(R.id.description)
-            checkBox = itemView.findViewById(R.id.checkbox_main)
-        }
-
+    class BookmarkNewsSourceHolder (val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkNewsSourceHolder {
-        val view = LayoutInflater.from(parent.context).inflate(rowLayout,parent,false)
-        return BookmarkNewsSourceAdapter.BookmarkNewsSourceHolder(view)
+        val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return BookmarkNewsSourceAdapter.BookmarkNewsSourceHolder(binding)
     }
 
     override fun onBindViewHolder(holder: BookmarkNewsSourceHolder, position: Int) {
 
-        holder.title.text = newsSourceList!![position]!!.title
-        holder.description.text = newsSourceList!![position]!!.description
-        holder.language.text = newsSourceList!![position]!!.language!!.toFlagEmoji()
+        holder.binding.title.text = newsSourceList!![position]!!.title
+        holder.binding.description.text = newsSourceList!![position]!!.description
+        holder.binding.countryFlag.text = newsSourceList!![position]!!.language!!.toFlagEmoji()
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DetailActivity::class.java)
@@ -70,7 +56,7 @@ class BookmarkNewsSourceAdapter (val newsSourceList: ArrayList<NewsSourceModel>,
                 Log.e("***", newsSourceList[position]!!.title!!)
 
                 if(title == (newsSourceList[position]!!.title!!)){
-                    holder.checkBox.isChecked = cursor.count > 0
+                    holder.binding.checkboxMain.isChecked = cursor.count > 0
                 }
             }
 
@@ -82,10 +68,10 @@ class BookmarkNewsSourceAdapter (val newsSourceList: ArrayList<NewsSourceModel>,
             e.printStackTrace()
         }
 
-        holder.checkBox.setOnCheckedChangeListener{buttonView, isChecked ->
+        holder.binding.checkboxMain.setOnCheckedChangeListener{buttonView, isChecked ->
             val database = context!!.openOrCreateDatabase("NewsSource", AppCompatActivity.MODE_PRIVATE,null)
             if(isChecked){
-                holder.checkBox.isChecked = false
+                holder.binding.checkboxMain.isChecked = false
             }else{
                 try {
                     val difficultString = newsSourceList[position]!!.title!!.replace("'","''")

@@ -14,41 +14,26 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.R
+import com.example.wellbees_project.databinding.ListItemSourcesBinding
 import com.example.wellbees_project.models.NewsDetailModel
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
 class BookmarkNewsDetailAdapter(val newsDetailList: ArrayList<NewsDetailModel>, private val rowLayout: Int, private val context: Context?): RecyclerView.Adapter<BookmarkNewsDetailAdapter.BookmarkNewsDetailHolder>() {
 
-    class BookmarkNewsDetailHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var sourceLayout: LinearLayout
-        var sourceTitle: TextView
-        var sourceDescription: TextView
-        var sourceContent: TextView
-        var sourceDetailImage: ImageView
-        var checkBoxDetail: CheckBox
-
-        init {
-            sourceLayout = itemView.findViewById(R.id.source_layout)
-            sourceTitle = itemView.findViewById(R.id.title)
-            sourceContent = itemView.findViewById(R.id.content)
-            sourceDescription = itemView.findViewById(R.id.description)
-            sourceDetailImage = itemView.findViewById(R.id.imageview_source_detail)
-            checkBoxDetail = itemView.findViewById(R.id.checkbox_detail)
-        }
-
+    class BookmarkNewsDetailHolder(val binding: ListItemSourcesBinding) : RecyclerView.ViewHolder(binding.root){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkNewsDetailHolder {
-        val view = LayoutInflater.from(parent.context).inflate(rowLayout,parent,false)
-        return BookmarkNewsDetailHolder(view)
+        val binding = ListItemSourcesBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return BookmarkNewsDetailHolder(binding)
     }
 
     override fun onBindViewHolder(holder: BookmarkNewsDetailHolder, position: Int) {
-        holder.sourceTitle.text = newsDetailList.get(position).title
-        holder.sourceDescription.text = newsDetailList.get(position).description
-        holder.sourceContent.text = newsDetailList.get(position).content
-        Picasso.get().load(newsDetailList.get(position)!!.urlToImage).into(holder.sourceDetailImage)
+        holder.binding.title.text = newsDetailList.get(position).title
+        holder.binding.description.text = newsDetailList.get(position).description
+        holder.binding.content.text = newsDetailList.get(position).content
+        Picasso.get().load(newsDetailList.get(position)!!.urlToImage).into(holder.binding.imageviewSourceDetail)
 
         holder.itemView.setOnClickListener{
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(newsDetailList[position]!!.url))
@@ -71,7 +56,7 @@ class BookmarkNewsDetailAdapter(val newsDetailList: ArrayList<NewsDetailModel>, 
                 Log.e("***", newsDetailList[position]!!.title!!)
 
                 if(title == (newsDetailList[position]!!.title!!)){
-                    holder.checkBoxDetail.isChecked = cursor.count > 0
+                    holder.binding.checkboxDetail.isChecked = cursor.count > 0
                 }
             }
 
@@ -83,10 +68,10 @@ class BookmarkNewsDetailAdapter(val newsDetailList: ArrayList<NewsDetailModel>, 
             e.printStackTrace()
         }
 
-        holder.checkBoxDetail.setOnCheckedChangeListener{buttonView, isChecked ->
+        holder.binding.checkboxDetail.setOnCheckedChangeListener{buttonView, isChecked ->
             val database = context!!.openOrCreateDatabase("NewsDetails", AppCompatActivity.MODE_PRIVATE,null)
             if(isChecked){
-                holder.checkBoxDetail.isChecked = false
+                holder.binding.checkboxDetail.isChecked = false
             }else{
                 try {
                     val difficultString = newsDetailList[position]!!.title!!.replace("'","''")

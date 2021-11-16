@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.R
+import com.example.wellbees_project.databinding.ListItemSourcesBinding
 import com.example.wellbees_project.detailedSources.SourceDetailAdapter.SourceDetailViewHolder
 import com.example.wellbees_project.models.NewsDetailModel
 import com.squareup.picasso.Picasso
@@ -21,38 +22,22 @@ import java.lang.Exception
 
 
 class SourceDetailAdapter(private val sources: List<Article?>?, private val rowLayout: Int, private val context: Context) : RecyclerView.Adapter<SourceDetailViewHolder>() {
-    class SourceDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //haber kaynaklarımın detaylarında kullanacağım elementlerin tanımlanmasını yapıyorum
-        var sourceLayout: LinearLayout
-        var sourceTitle: TextView
-        var sourceDescription: TextView
-        var sourceContent: TextView
-        var sourceDetailImage: ImageView
-        var checkBoxDetail: CheckBox
 
-        init {
-            //haber kaynaklarının bulunduğu ekrandaki elementleri xml dosyam ile ilişkilendiriyorum
-            sourceLayout = itemView.findViewById(R.id.source_layout)
-            sourceTitle = itemView.findViewById(R.id.title)
-            sourceContent = itemView.findViewById(R.id.content)
-            sourceDescription = itemView.findViewById(R.id.description)
-            sourceDetailImage = itemView.findViewById(R.id.imageview_source_detail)
-            checkBoxDetail = itemView.findViewById(R.id.checkbox_detail)
-        }
+    class SourceDetailViewHolder(val binding: ListItemSourcesBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SourceDetailViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(rowLayout, parent, false)
-        return SourceDetailViewHolder(view)
+        val binding = ListItemSourcesBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return SourceDetailViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SourceDetailViewHolder, position: Int) {
         //ilişkilendirmiş olduğum elementlerin üzerine verilerin atanmasını sağladım
-        holder.sourceTitle.text = sources!![position]!!.title
-        holder.sourceDescription.text = sources[position]!!.description
-        holder.sourceContent.text = sources[position]!!.content
-        Picasso.get().load(sources[position]!!.urlToImage).into(holder.sourceDetailImage)
+        holder.binding.title.text = sources!![position]!!.title
+        holder.binding.description.text = sources[position]!!.description
+        holder.binding.content.text = sources[position]!!.content
+        Picasso.get().load(sources[position]!!.urlToImage).into(holder.binding.imageviewSourceDetail)
 
 
         // liste elemanıma tıklanma özelliğini ekledim
@@ -82,7 +67,7 @@ class SourceDetailAdapter(private val sources: List<Article?>?, private val rowL
 
                 //eğer title veritabanımdaki herhangi bir veri ile eşitse bookmarkın işaretli olmasını sağlıyorum
                 if(title == (sources[position]!!.title!!)){
-                    holder.checkBoxDetail.isChecked = cursor.count > 0
+                    holder.binding.checkboxDetail.isChecked = cursor.count > 0
                 }
             }
 
@@ -95,7 +80,7 @@ class SourceDetailAdapter(private val sources: List<Article?>?, private val rowL
         }
 
         //burada bookmark olarak adlandırmış olduğum checkboxlarımın açılıp kapanmasını dinliyorum.
-        holder.checkBoxDetail.setOnCheckedChangeListener{buttonView, isChecked ->
+        holder.binding.checkboxDetail.setOnCheckedChangeListener{buttonView, isChecked ->
             //databaseimi açıyorum
             val database = context.openOrCreateDatabase("NewsDetails", AppCompatActivity.MODE_PRIVATE,null)
 

@@ -14,39 +14,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wellbees_project.activity.DetailActivity
 import com.example.wellbees_project.R
 import com.example.wellbees_project.allSources.AllSourcesAdapter.AllSourcesViewHolder
+import com.example.wellbees_project.databinding.ListItemBinding
 import java.lang.Exception
 
 class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayout: Int, private val context: Context) : RecyclerView.Adapter<AllSourcesViewHolder>() {
 
     //haber kaynaklarımda kullanacağım elementlerin tanımlanmasını yapıyorum
-    class AllSourcesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var sourceLayout: LinearLayout
-        var sourceTitle: TextView
-        var sourceDescription: TextView
-        var sourceData: TextView
-        val checkBox: CheckBox
+    class AllSourcesViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            //haber kaynaklarının bulunduğu ekrandaki elementleri xml dosyam ile ilişkilendiriyorum
-            sourceLayout = itemView.findViewById(R.id.source_layout)
-            sourceTitle = itemView.findViewById(R.id.title)
-            sourceData = itemView.findViewById(R.id.countryFlag)
-            sourceDescription = itemView.findViewById(R.id.description)
-            checkBox = itemView.findViewById(R.id.checkbox_main)
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllSourcesViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(rowLayout, parent, false)
-        return AllSourcesViewHolder(view)
+        val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return AllSourcesViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AllSourcesViewHolder, position: Int) {
         //ilişkilendirmiş olduğum elementlerin üzerine verilerin atanmasını sağladım
-        holder.sourceTitle.text = sources!![position]!!.name
-        holder.sourceDescription.text = sources[position]!!.description
+        holder.binding.title.text = sources!![position]!!.name
+        holder.binding.description.text = sources[position]!!.description
         //burada farklı bir yöntem izleyerek dillerin yazı olarak değil bayrak olarak gözükmesini sağladım
-        holder.sourceData.text = sources!![position]!!.language!!.toFlagEmoji()
+        holder.binding.countryFlag.text = sources!![position]!!.language!!.toFlagEmoji()
 
         // liste elemanıma tıklanma özelliğini ekledim
         holder.itemView.setOnClickListener {
@@ -77,7 +65,7 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
 
                 //eğer title veritabanımdaki herhangi bir veri ile eşitse bookmarkın işaretli olmasını sağlıyorum
                 if(title == (sources[position]!!.name!!)){
-                    holder.checkBox.isChecked = cursor.count > 0
+                    holder.binding.checkboxMain.isChecked = cursor.count > 0
                 }
             }
 
@@ -91,7 +79,7 @@ class AllSourcesAdapter(private val sources: List<Source?>?, private val rowLayo
 
 
         //burada bookmark olarak adlandırmış olduğum checkboxlarımın açılıp kapanmasını dinliyorum.
-        holder.checkBox.setOnCheckedChangeListener{buttonView, isChecked ->
+        holder.binding.checkboxMain.setOnCheckedChangeListener{buttonView, isChecked ->
             val database = context.openOrCreateDatabase("NewsSource", AppCompatActivity.MODE_PRIVATE,null)
 
             // eğer bookmark işaretli değilken tıklamış isem bu alana girip o verinin veritabanıma kaydolmasını sağlıyorum
