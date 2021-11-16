@@ -1,5 +1,5 @@
 
-# Wellbees Project
+# News App
 ### Simple News App
 
 ## Table of Contents
@@ -37,16 +37,16 @@ For this project, I pulled the data from newsapi on the internet. I kept the rec
 
 * The light mode pages of the application are below.
 
-<img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-095614_Wellbees-Project.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100255_Wellbees-Project.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100305_Wellbees-Project.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100311_Wellbees-Project.jpg" width="200"/> 
-<img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100356_Wellbees-Project.jpg" width="200"/>
+<img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155420_News-App.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155435_News-App.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155448_News-App.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155500_News-App.jpg" width="200"/> 
+<img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155521_News-App.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155539_Chrome.jpg" width="200"/>
 
 
 
 * This application also has dark mode and works in harmony with the dark mode of your phone.
 
-<img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100545_Wellbees-Project.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100559_Wellbees-Project.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100608_Wellbees-Project.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100616_Wellbees-Project.jpg" width="200"/> 
-<img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100639_Wellbees-Project.jpg" width="200"/> 
-<img src="https://thetreemedia.com/wp-content/uploads/2021/08/Screenshot_20210802-100700_Chrome.jpg" width="200"/>
+<img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155601_News-App.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155612_News-App.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155620_News-App.jpg" width="200"/> <img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155625_News-App.jpg" width="200"/> 
+<img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155658_News-App.jpg" width="200"/> 
+<img src="https://thetreemedia.com/wp-content/uploads/2021/11/Screenshot_20211103-155635_Chrome.jpg" width="200"/>
 
 
 
